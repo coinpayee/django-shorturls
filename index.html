@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Django Short URLs : URL shortening service for Django" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Django Short URLs</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/dryan/django-shorturls">View on GitHub</a>
+
+          <h1 id="project_title">Django Short URLs</h1>
+          <h2 id="project_tagline">URL shortening service for Django</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/dryan/django-shorturls/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/dryan/django-shorturls/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>This is a simple url shortening service for Django.</p>
+
+<p>Note: depending on your setup, you might need to use <code>yourappname.shorturls</code> instead of just <code>shorturls</code> wherever it appears in these instructions</p>
+
+<h1>Installation</h1>
+
+<ol>
+<li>Put the shorturls folder in your Django project</li>
+<li>Add <code>shorturls</code> to your INSTALLED_APPS setting</li>
+<li>Add <code>shorturls.middleware.ShortURLMiddleware</code> to your MIDDLEWARE_CLASSES setting at the end (but before <code>django.middleware.cache.FetchFromCacheMiddleware</code> if you're using it)</li>
+<li>Run <code>python manage.py syncdb</code> on the command line in your app folder</li>
+</ol><h1>Integration</h1>
+
+<p>If you want to have a model created a shorturl for each instance when it is created, add the following <code>save</code> method to the model (or add to your existing <code>save</code> method)</p>
+
+<pre><code>def save( self, force_insert=False, force_update=False ):
+    from shorturls.models import ShortURL
+    shorturl, new = ShortURL.objects.get_or_create( url = self.get_absolute_url() )
+    if new:
+        shorturl.save()
+    super( ModelName, self ).save( force_insert, force_update )
+</code></pre>
+
+<p>Additionally, if you want to make the shorturl available as a property of each model instance, add the following to the model:</p>
+
+<pre><code>def shorturl( self ):
+    try:
+        from shorturls.models import ShortURL
+        shorturl = ShortURL.objects.get( url = self.get_absolute_url() )
+    except:
+        shorturl = False
+    return shorturl
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Django Short URLs maintained by <a href="https://github.com/dryan">dryan</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-3625251-4");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
