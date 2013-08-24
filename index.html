@@ -35,14 +35,16 @@
 
 <p>Note: depending on your setup, you might need to use <code>yourappname.shorturls</code> instead of just <code>shorturls</code> wherever it appears in these instructions</p>
 
-<h1>Installation</h1>
+<h1>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
 
 <ol>
 <li>Put the shorturls folder in your Django project</li>
 <li>Add <code>shorturls</code> to your INSTALLED_APPS setting</li>
 <li>Add <code>shorturls.middleware.ShortURLMiddleware</code> to your MIDDLEWARE_CLASSES setting at the end (but before <code>django.middleware.cache.FetchFromCacheMiddleware</code> if you're using it)</li>
 <li>Run <code>python manage.py syncdb</code> on the command line in your app folder</li>
-</ol><h1>Integration</h1>
+</ol><h1>
+<a name="integration" class="anchor" href="#integration"><span class="octicon octicon-link"></span></a>Integration</h1>
 
 <p>If you want to have a model created a shorturl for each instance when it is created, add the following <code>save</code> method to the model (or add to your existing <code>save</code> method)</p>
 
@@ -81,7 +83,7 @@
           </script>
           <script type="text/javascript">
             try {
-              var pageTracker = _gat._getTracker("UA-3625251-4");
+              var pageTracker = _gat._getTracker("UA-3625251-12");
             pageTracker._trackPageview();
             } catch(err) {}
           </script>
